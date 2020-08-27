@@ -9,6 +9,7 @@
     - include_vars: "{{ item }}"
       with_fileglob:
         - "{{ playbook_dir }}/my.config.yml"
+        - "{{ playbook_dir }}/private.config.yml"
       tags: ['always']
 
   roles:
