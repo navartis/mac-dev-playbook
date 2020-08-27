@@ -24,8 +24,6 @@ mas_upgrade_all_apps: no
 mas_email: ""
 mas_password: ""
 mas_installed_apps: 
-  - name: "Amphetamine"
-    id: 937984704
   - name: "Xcode"
     id: 497799835
 
