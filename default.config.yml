@@ -77,6 +77,8 @@ composer_packages: []
   # - name: drush
   #   state: present # present/absent, default: present
   #   version: "^8.1" # default: N/A
+
+gem_packages_become: no
 gem_packages: []
   # - name: bundler
   #   state: present # present/absent/latest, default: present

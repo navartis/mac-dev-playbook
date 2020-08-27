@@ -31,4 +31,5 @@
     version: "{{ item.version | default(omit) }}"
     user_install: no
     executable: "{{ item.executable | default(omit) }}"
+  become: "{{ gem_packages_become }}"
   with_items: "{{ gem_packages }}"
