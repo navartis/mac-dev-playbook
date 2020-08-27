@@ -1,0 +1,24 @@
+---
+
+- name: Define SHELL
+  cron:
+    name: SHELL
+    env: yes
+    job: /bin/bash
+  tags: ["always"]
+
+- name: Define BASH_ENV
+  cron:
+    name: BASH_ENV
+    env: yes
+    job: "./.bash_profile"
+    insertafter: SHELL
+  tags: ["always"]
+
+- name: Ensure Delete Xcode Archives crontab job
+  cron:
+    name: "Delete Xcode Archives"
+    minute: "5"
+    hour: "10"
+    job: "find \"$HOME\"/Library/Developer/Xcode/Archives -type d -ctime +\"$OLDER_THAN_DAYS\" -depth 1 |  xargs rm -rfv > /dev/null"
+  tags: ["always"]
