@@ -35,7 +35,16 @@
   when: plist_file.changed
   tags: ["always"]
 
+- name: Check service status
+  command: launchctl list com.jenkins.slave
+  become: yes
+  register: status_result
+  changed_when: false
+  failed_when: "status_result.rc not in [0, 113]"
+  tags: ["always"]
+
 - name: Load launchd service
   command: launchctl load /Library/LaunchDaemons/com.jenkins.slave.plist
   become: yes
+  when: "'Could not find service' in status_result.stderr and status_result.rc == 113"
   tags: ["always"]
