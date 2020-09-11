@@ -3,6 +3,10 @@ configure_sudoers: yes
 configure_terminal: no
 configure_osx: yes
 
+yd_host_user_name: ""
+yd_jenkins_agent_user: ""
+yd_jenkins_agent_password: ""
+
 dotfiles_repo: ""
 dotfiles_repo_accept_hostkey: yes
 dotfiles_repo_local_destination: ~/Development/GitHub/dotfiles
@@ -67,3 +71,4 @@ pip_packages:
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
   - "{{ playbook_dir }}/tasks/crontab.yml"
+  - "{{ playbook_dir }}/tasks/jenkins.yml"

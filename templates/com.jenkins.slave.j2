@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Label</key>
+        <string>com.jenkins.slave</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>sudo</string>
+                <string>-u</string>
+                <string>{{ yd_host_user_name }}</string>
+                <string>-i</string>
+                <string>/usr/bin/java</string>
+                <string>-jar</string>
+                <string>/Users/{{ yd_host_user_name }}/Jenkins/swarm-client.jar</string>
+                <string>-mode</string>
+                <string>exclusive</string>
+                <string>-labels</string>
+                <string>ios-dev-ci-node</string>
+                <string>-labels</string>
+                <string>ios-ansible-debug</string>
+                <string>-master</string>
+                <string>http://build.youdo.sg</string>
+                <string>-name</string>
+                <string>{{ ansible_hostname }}</string>
+                <string>-workDir</string>
+                <string>/Users/{{ yd_host_user_name }}/Jenkins/</string>
+                <string>-fsroot</string>
+                <string>/Users/{{ yd_host_user_name }}/Jenkins/</string>
+                <string>-deleteExistingClients</string>
+                <string>-disableSslVerification</string>
+                <string>-disableClientsUniqueId</string>
+                <string>-executors</string>
+                <string>1</string>
+                <string>-username</string>
+                <string>{{ yd_jenkins_agent_user }}</string>
+                <string>-password</string>
+                <string>{{ yd_jenkins_agent_password }}</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>StandardOutPath</key>
+        <string>/Users/{{ yd_host_user_name }}/Jenkins/stdout.log</string>
+        <key>StandardErrorPath</key>
+        <string>/Users/{{ yd_host_user_name }}/Jenkins/error.log</string>
+        <key>SessionCreate</key>
+        <true/>
+</dict>
+</plist>

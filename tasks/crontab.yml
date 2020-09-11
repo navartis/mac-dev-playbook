@@ -1,5 +1,4 @@
 ---
-
 - name: Define SHELL
   cron:
     name: SHELL

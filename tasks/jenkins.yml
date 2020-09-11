@@ -1,0 +1,41 @@
+---
+- name: Create directory for Jenkins
+  file:
+    path: /Users/{{ yd_host_user_name }}/Jenkins
+    state: directory
+  tags: ["always"]
+
+- name: Download swarm client
+  get_url:
+    url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.22/swarm-client-3.22.jar
+    dest: /Users/{{ yd_host_user_name }}/Jenkins/swarm-client.jar
+  tags: ["always"]
+  
+# - name: Check plist file exists
+#   stat:
+#     path: /Library/LaunchDaemons/com.jenkins.slave.plist
+#   register: plist_file
+#   tags: ["always"]
+
+- name: Copy plist
+  template:
+    src: com.jenkins.slave.j2
+    dest: /Library/LaunchDaemons/com.jenkins.slave.plist
+    force: true
+    owner: root
+    group: wheel
+    mode: 0644
+  become: yes
+  register: plist_file
+  tags: ["always"]
+
+- name: Unload launchd service
+  command: launchctl unload /Library/LaunchDaemons/com.jenkins.slave.plist
+  become: yes
+  when: plist_file.changed
+  tags: ["always"]
+
+- name: Load launchd service
+  command: launchctl load /Library/LaunchDaemons/com.jenkins.slave.plist
+  become: yes
+  tags: ["always"]
