@@ -42,13 +42,13 @@ gem_packages:
   - name: cocoapods-binary
     version: "0.4.4"
   - name: xcodeproj
-    version: "1.16.0"
+    version: "1.18.0"
   - name: nokogiri
-    version: "1.10.9"
+    version: "1.10.10"
   - name: fastlane
-    version: "2.150.1"
+    version: "2.157.2"
   - name: fastlane-plugin-firebase_app_distribution
-    version: "0.1.4"
+    version: "0.2.0"
 
 pip_executable: "pip3.7"
 pip_packages:
