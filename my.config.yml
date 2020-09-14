@@ -68,7 +68,12 @@ pip_packages:
     version: "5.0.0"
     executable: "{{ pip_executable }}"
 
+osx_updates_for_install:
+  - "macOS Catalina 10.15.6 Update- "
+  - "Command Line Tools beta 5 for Xcode-12.0"
+
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
+  - "{{ playbook_dir }}/tasks/osx-updates.yml"
   - "{{ playbook_dir }}/tasks/crontab.yml"
   - "{{ playbook_dir }}/tasks/jenkins.yml"

@@ -1,0 +1,11 @@
+---
+- name: Install MacOS updates
+  command: softwareupdate -i "{{ update_item }}" --restart --force
+  become: yes
+  register: update_result
+  changed_when: "'No such update' not in update_result.stderr "
+  failed_when: "update_result.rc != 0"
+  loop_control:
+    loop_var: update_item
+  with_items: "{{ osx_updates_for_install }}"
+  tags: ["always"]
