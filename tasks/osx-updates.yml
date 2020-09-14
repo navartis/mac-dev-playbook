@@ -1,5 +1,5 @@
 ---
-- name: Install MacOS updates
+- name: Install MacOS Updates
   command: softwareupdate -i "{{ update_item }}" --restart --force
   become: yes
   register: update_result
