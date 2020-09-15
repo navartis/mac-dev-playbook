@@ -3,3 +3,20 @@
 - name: Run .osx dotfiles.
   shell: "{{ osx_script }}"
   changed_when: false
+
+- name: Check .bashrc Type
+  stat:
+    path: ~/.bashrc
+  register: bashrc_type
+
+- name: Link .bashrc
+  file:
+    path: ~/.bashrc
+    state: absent
+  when: bashrc_type.stat.exists and not bashrc_type.stat.islnk
+
+- name: Link .bashrc to .bash_profile
+  file:
+    src: ~/.bash_profile
+    dest: ~/.bashrc
+    state: link
