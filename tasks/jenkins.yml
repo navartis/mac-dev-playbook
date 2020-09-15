@@ -7,7 +7,7 @@
 
 - name: Download swarm client
   get_url:
-    url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.22/swarm-client-3.22.jar
+    url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.23/swarm-client-3.23.jar
     dest: /Users/{{ yd_host_user_name }}/Jenkins/swarm-client.jar
   tags: ["always"]
   

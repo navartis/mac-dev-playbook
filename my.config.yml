@@ -29,9 +29,7 @@ homebrew_cask_apps:
 mas_upgrade_all_apps: no
 mas_email: ""
 mas_password: ""
-mas_installed_apps: 
-  - name: "Xcode"
-    id: 497799835
+mas_installed_apps: []
 
 osx_script: "~/configure_osx.sh --no-restart"
 
@@ -68,12 +66,18 @@ pip_packages:
     version: "5.0.0"
     executable: "{{ pip_executable }}"
 
-osx_updates_for_install:
+yd_osx_updates_for_install:
   - "macOS Catalina 10.15.6 Update- "
   - "Command Line Tools beta 5 for Xcode-12.0"
+
+yd_share_network_resource: ""
+yd_share_mount_point: ""
+yd_required_xcode_version: "11.7"
+yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
   - "{{ playbook_dir }}/tasks/osx-updates.yml"
+  - "{{ playbook_dir }}/tasks/install_xcode.yml"
   - "{{ playbook_dir }}/tasks/crontab.yml"
   - "{{ playbook_dir }}/tasks/jenkins.yml"

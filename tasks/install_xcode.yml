@@ -1,0 +1,104 @@
+---
+- name: Get Current Xcode Version
+  command: /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" /Applications/Xcode.app/Contents/version.plist
+  register: current_xcode_version_result
+  changed_when: false
+  failed_when: "current_xcode_version_result.rc not in [0, 1]"
+  tags: ["always"]
+
+- set_fact: 
+    should_install_xcode={{ current_xcode_version_result.stdout != yd_required_xcode_version }}
+  tags: ["always"]
+
+# !!! mount module does not work at MacOS
+#
+# - name: Mount SMB share
+#   mount:
+#     path: "{{ yd_share_mount_point }}"
+#     src: "{{ yd_share_network_resource }}"
+#     fstype: smbfs
+#     boot: no
+#     opts: "soft"
+#     state: mounted
+#   become: yes
+#   tags: ["always"]
+
+- name: Create SMB share mount point
+  file:
+    path: "{{ yd_share_mount_point }}"
+    state: directory
+  become: yes
+  when: should_install_xcode
+  tags: ["always"]
+
+- name: Mount SMB share
+  command: mount_smbfs -N "{{ yd_share_network_resource }}" "{{ yd_share_mount_point }}"
+  become: yes
+  register: mount_result
+  failed_when: mount_result.rc not in [0, 64]
+  when: should_install_xcode
+  tags: ["always"]
+
+- name: Download Xcode Archive
+  copy:
+    src: "{{ yd_share_mount_point }}/{{ yd_xcode_file_name }}"
+    remote_src: yes
+    dest: "/Applications/"
+    force: no
+  become: yes
+  when: should_install_xcode
+  tags: ["always"]
+
+- name: Unmount SMB share
+  mount:
+    path: "{{ yd_share_mount_point }}"
+    state: unmounted
+  become: yes
+  when: should_install_xcode
+  tags: ["always"]
+
+# !!! Removing big number of files works faster and log tolerantly using rm command
+#
+# - name: Remove Installed Xcode
+#   file:
+#     path: "/Applications/Xcode.app"
+#     state: absent
+#   become: yes
+#   when: should_install_xcode
+#   tags: ["always"]
+
+- name: Remove Installed Xcode
+  command: rm -rf /Applications/Xcode.app
+  become: yes
+  when: should_install_xcode
+  tags: ["always"]
+
+- name: Expand Xcode Archive
+  command: xip -x "{{ yd_xcode_file_name }}"
+  args:
+    chdir: "/Applications"
+  become: yes
+  when: should_install_xcode
+  tags: ["always"]
+
+# - name: Change User and Group Permissions
+#   command: chown -R root:wheel /Applications/Xcode.app
+#   become: yes
+#   when: should_install_xcode
+#   tags: ["always"]
+
+- name: Delete Xcode Archive
+  file:
+    path: "/Applications/{{ yd_xcode_file_name }}"
+    state: absent
+  become: yes
+  when: should_install_xcode
+  tags: ["always"]
+
+
+# NOTICE: For the run "Install required components" at first Xcode launch 
+# next commands may be helpfull. A specialy in case of AppStore installation source.
+#
+# !!! Вероятно эта комманда не нужна
+# $ sudo xcodebuild -license accept
+# $ sudo /usr/bin/xcodebuild -runFirstLaunch
