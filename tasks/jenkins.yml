@@ -15,6 +15,7 @@
   get_url:
     url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ yd_swarm_client_version }}/swarm-client-{{ yd_swarm_client_version }}.jar
     dest: ~/Jenkins/swarm-client-{{ yd_swarm_client_version }}.jar
+    # force: yes
   register: swarm_client_file
   tags: ["always"]
   
