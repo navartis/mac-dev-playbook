@@ -95,6 +95,11 @@
   when: should_install_xcode
   tags: ["always"]
 
+- name: Select Xcode
+  command: xcode-select -s /Applications/Xcode.app/Contents/Developer
+  changed_when: false
+  become: yes
+  tags: ["always"]
 
 # NOTICE: For the run "Install required components" at first Xcode launch 
 # next commands may be helpfull. A specialy in case of AppStore installation source.
