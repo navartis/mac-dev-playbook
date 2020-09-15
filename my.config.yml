@@ -75,6 +75,8 @@ yd_share_mount_point: ""
 yd_required_xcode_version: "11.7"
 yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
+yd_swarm_client_version: "3.23"
+
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
   - "{{ playbook_dir }}/tasks/osx-updates.yml"

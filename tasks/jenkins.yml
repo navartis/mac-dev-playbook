@@ -5,10 +5,17 @@
     state: directory
   tags: ["always"]
 
-- name: Download swarm client
+- name: Ensure Old Swarm Clent Without Version Deleted
+  file:
+    path: ~/Jenkins/swarm-client.jar
+    state: absent
+  tags: ["always"]
+
+- name: Download Swarm Client
   get_url:
-    url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.23/swarm-client-3.23.jar
-    dest: /Users/{{ yd_host_user_name }}/Jenkins/swarm-client.jar
+    url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ yd_swarm_client_version }}/swarm-client-{{ yd_swarm_client_version }}.jar
+    dest: ~/Jenkins/swarm-client-{{ yd_swarm_client_version }}.jar
+  register: swarm_client_file
   tags: ["always"]
   
 # - name: Check plist file exists
@@ -32,7 +39,7 @@
 - name: Unload launchd service
   command: launchctl unload /Library/LaunchDaemons/com.jenkins.slave.plist
   become: yes
-  when: plist_file.changed
+  when: plist_file.changed or swarm_client_file.changed
   tags: ["always"]
 
 - name: Check service status
