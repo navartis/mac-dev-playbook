@@ -15,6 +15,7 @@ dotfiles_files:
   - .bash_profile
   - configure_osx.sh
 
+homebrew_upgrade_all_packages: yes
 homebrew_installed_packages:
   - "python@3.7"
   - "jq"
