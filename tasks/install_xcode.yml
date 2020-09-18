@@ -101,6 +101,14 @@
   become: yes
   tags: ["always"]
 
+- name: Install Xcode Required Components
+  command: /usr/bin/xcodebuild -runFirstLaunch
+  become: yes
+  register: required_components_result
+  changed_when: "'Install Succeeded' in required_components_result.stdout"
+  failed_when: required_components_result.rc != 0
+  tags: ["always"]
+
 # NOTICE: For the run "Install required components" at first Xcode launch 
 # next commands may be helpfull. A specialy in case of AppStore installation source.
 #
