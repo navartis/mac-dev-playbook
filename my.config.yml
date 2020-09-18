@@ -14,6 +14,8 @@ dotfiles_files:
   - .profile
   - .bash_profile
   - configure_osx.sh
+  - Development.p12
+  - Distribution.p12
 
 homebrew_upgrade_all_packages: yes
 homebrew_installed_packages:
@@ -78,9 +80,14 @@ yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
 yd_swarm_client_version: "3.23"
 
+yd_required_identities: []
+
+yd_identities_keychain: ""
+ 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
   - "{{ playbook_dir }}/tasks/osx-updates.yml"
   - "{{ playbook_dir }}/tasks/install_xcode.yml"
   - "{{ playbook_dir }}/tasks/crontab.yml"
   - "{{ playbook_dir }}/tasks/jenkins.yml"
+  - "{{ playbook_dir }}/tasks/identities.yml"

@@ -1,0 +1,39 @@
+---
+- name: Get Valid Identities
+  command: security find-identity -v
+  register: valid_identities_result
+  changed_when: false
+  failed_when: "valid_identities_result.rc != 0"
+  tags: ["always"]
+
+- set_fact: 
+    should_unlock_keychain=true
+  when: "valid_identities_result.stdout_lines is not search(\"{{ identity_item.hash }}\")"
+  loop_control:
+    loop_var: identity_item
+  with_items: "{{ yd_required_identities }}"
+  tags: ["always"]
+
+- name: Unlock Keychain
+  command: security unlock-keychain -p {{ ansible_sudo_pass }} {{ yd_identities_keychain }}
+  when: "should_unlock_keychain is defined"
+  register: unlock_result
+  failed_when: "unlock_result.rc != 0"
+  tags: ["always"]
+
+- name: Import Identity
+  command: security import ~/{{ identity_item.name }}.p12 -k "{{ yd_identities_keychain }}" -P "{{ identity_item.passphrase }}" -A 
+  when: "valid_identities_result.stdout_lines is not search(\"{{ identity_item.hash }}\")"
+  register: import_identity_result
+  failed_when: "import_identity_result.rc != 0"
+  loop_control:
+    loop_var: identity_item
+  with_items: "{{ yd_required_identities }}"
+  tags: ["always"]
+
+# - name: Lock Keychain
+#   command: security lock-keychain {{ yd_identities_keychain }}
+#   when: "should_unlock_keychain is defined"
+#   register: lock_result
+#   failed_when: "lock_result.rc != 0"
+#   tags: ["always"]
