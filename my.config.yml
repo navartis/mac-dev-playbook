@@ -48,6 +48,9 @@ gem_packages:
     version: "1.10.10"
   - name: fastlane
     version: "2.157.2"
+    state: "absent"
+  - name: fastlane
+    version: "2.157.3"
   - name: fastlane-plugin-firebase_app_distribution
     version: "0.2.0"
 
