@@ -1,4 +1,8 @@
 ---
+- set_fact: 
+    yd_node_identifier="idcn-{{ ansible_ssh_host.split('.')[3] }}"
+  tags: ["always"]
+
 - name: Create directory for Jenkins
   file:
     path: /Users/{{ yd_host_user_name }}/Jenkins
