@@ -74,7 +74,8 @@ pip_packages:
 
 yd_osx_updates_for_install:
   - "macOS Catalina 10.15.6 Update- "
-  - "Command Line Tools beta 5 for Xcode-12.0"
+  - "macOS Catalina 10.15.6 Supplemental Update- "
+  # - "Command Line Tools beta 5 for Xcode-12.0"
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
