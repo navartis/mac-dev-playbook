@@ -1,6 +1,14 @@
 ---
 - set_fact: 
-    yd_node_identifier="idcn-{{ ansible_ssh_host.split('.')[3] }}"
+    yd_node_identifier="{{ yd_host_name_prefix }}{{ ansible_ssh_host.split('.')[3] }}"
+  tags: ["always"]
+
+- name: Ensure Jenkins Host Resolving
+  lineinfile: 
+    path: /etc/hosts
+    line: "{{ yd_jenkins_ip }}    {{ yd_jenkins_hostname }}"
+    state: present
+  become: yes
   tags: ["always"]
 
 - name: Create directory for Jenkins

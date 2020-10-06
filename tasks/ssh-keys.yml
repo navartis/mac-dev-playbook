@@ -1,0 +1,14 @@
+---
+- name: Ensure SSH Keys
+  copy:
+    src: "./private/.ssh/{{ key_item }}"
+    dest: ".ssh/{{ key_item }}"
+    mode: 0600
+    backup: yes
+  loop_control:
+    loop_var: key_item
+  loop:
+     - id_rsa
+     - id_rsa.pub
+  tags:
+    ["always"]

@@ -9,7 +9,12 @@
     - include_vars: "{{ item }}"
       with_fileglob:
         - "{{ playbook_dir }}/my.config.yml"
-        - "{{ playbook_dir }}/private.config.yml"
+        - "{{ playbook_dir }}/private/private.config.yml"
+      tags: ['always']
+    
+    - name: Run configured pre-provision ansible task files.
+      include_tasks: "{{ item }}"
+      with_fileglob: "{{ pre_provision_tasks|default(omit) }}" 
       tags: ['always']
 
   roles:

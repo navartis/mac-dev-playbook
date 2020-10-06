@@ -4,6 +4,7 @@ configure_terminal: no
 configure_osx: yes
 
 yd_host_user_name: ""
+yd_host_name_prefix: ""
 yd_jenkins_agent_user: ""
 yd_jenkins_agent_password: ""
 
@@ -21,13 +22,16 @@ homebrew_upgrade_all_packages: yes
 homebrew_installed_packages:
   - "python@3.7"
   - "jq"
-  - "xcparse" 
+  - "chargepoint/xcparse/xcparse" 
   - "coreutils"
+
+homebrew_uninstalled_packages: 
   - "openjdk"
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
   - sublime-text
+  - adoptopenjdk/openjdk/adoptopenjdk8
 
 mas_upgrade_all_apps: no
 mas_email: ""
@@ -87,11 +91,17 @@ yd_swarm_client_version: "3.23"
 yd_required_identities: []
 
 yd_identities_keychain: ""
+yd_jenkins_hostname: ""
+yd_jenkins_ip: ""
+
+pre_provision_tasks: 
+  - "{{ playbook_dir }}/tasks/ssh-keys.yml"
+  - "{{ playbook_dir }}/tasks/osx-updates.yml"
+  - "{{ playbook_dir }}/tasks/install_xcode.yml"
  
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
-  - "{{ playbook_dir }}/tasks/osx-updates.yml"
-  - "{{ playbook_dir }}/tasks/install_xcode.yml"
   - "{{ playbook_dir }}/tasks/crontab.yml"
   - "{{ playbook_dir }}/tasks/jenkins.yml"
   - "{{ playbook_dir }}/tasks/identities.yml"
+  - "{{ playbook_dir }}/tasks/git.yml"

@@ -101,6 +101,12 @@
   become: yes
   tags: ["always"]
 
+- name: Accept License
+  command: xcodebuild -license accept
+  changed_when: false
+  become: yes
+  tags: ["always"]
+
 - name: Install Xcode Required Components
   command: /usr/bin/xcodebuild -runFirstLaunch
   become: yes
@@ -108,10 +114,3 @@
   changed_when: "'Install Succeeded' in required_components_result.stdout"
   failed_when: required_components_result.rc != 0
   tags: ["always"]
-
-# NOTICE: For the run "Install required components" at first Xcode launch 
-# next commands may be helpfull. A specialy in case of AppStore installation source.
-#
-# !!! Вероятно эта комманда не нужна
-# $ sudo xcodebuild -license accept
-# $ sudo /usr/bin/xcodebuild -runFirstLaunch

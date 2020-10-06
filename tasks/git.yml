@@ -1,0 +1,12 @@
+---
+- set_fact: 
+    yd_node_identifier="{{ yd_host_name_prefix }}{{ ansible_ssh_host.split('.')[3] }}"
+  tags: ["always"]
+
+- name: Global Git Config
+  template:
+    src: gitconfig.j2
+    dest: ~/.gitconfig
+    force: true
+    mode: 0644
+  tags: ["always"]
