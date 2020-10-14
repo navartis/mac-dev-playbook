@@ -79,6 +79,8 @@ pip_packages:
 yd_osx_updates_for_install:
   - "macOS Catalina 10.15.6 Update- "
   - "macOS Catalina 10.15.6 Supplemental Update- "
+  - "Safari14.0CatalinaAuto-14.0"
+  - "macOS Catalina 10.15.7 Update- "
   # - "Command Line Tools beta 5 for Xcode-12.0"
 
 yd_share_network_resource: ""
