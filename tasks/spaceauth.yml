@@ -1,0 +1,8 @@
+---
+- name: Ensure Space Auth
+  copy:
+    src: "./private/spaceauth.cookie"
+    dest: ".fastlane/spaceship/{{ yd_adp_email }}/cookie"
+    mode: 0600
+  tags:
+    ["always"]

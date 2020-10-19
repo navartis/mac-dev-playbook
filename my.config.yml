@@ -97,6 +97,8 @@ yd_identities_keychain: ""
 yd_jenkins_hostname: ""
 yd_jenkins_ip: ""
 
+yd_adp_email: ""
+
 pre_provision_tasks: 
   - "{{ playbook_dir }}/tasks/ssh-keys.yml"
   - "{{ playbook_dir }}/tasks/osx-updates.yml"
@@ -108,3 +110,4 @@ post_provision_tasks:
   - "{{ playbook_dir }}/tasks/jenkins.yml"
   - "{{ playbook_dir }}/tasks/identities.yml"
   - "{{ playbook_dir }}/tasks/git.yml"
+  - "{{ playbook_dir }}/tasks/spaceauth.yml"
