@@ -24,6 +24,7 @@ homebrew_installed_packages:
   - "jq"
   - "chargepoint/xcparse/xcparse" 
   - "coreutils"
+  - "xmlstarlet"
 
 homebrew_uninstalled_packages: 
   - "openjdk"
@@ -44,11 +45,11 @@ osx_script: "~/configure_osx.sh --no-restart"
 gem_packages_become: yes
 gem_packages:
   - name: cocoapods
-    version: "1.9.3"
+    version: "1.10.0"
   - name: cocoapods-binary
     version: "0.4.4"
   - name: xcodeproj
-    version: "1.18.0"
+    version: "1.19.0"
   - name: nokogiri
     version: "1.10.10"
   - name: fastlane
@@ -56,8 +57,17 @@ gem_packages:
     state: "absent"
   - name: fastlane
     version: "2.157.3"
+    state: "absent"
+  - name: fastlane
+    version: "2.167.0"
+    state: "absent"
+  - name: fastlane
+    version: "2.168.0"
   - name: fastlane-plugin-firebase_app_distribution
     version: "0.2.0"
+    state: "absent"
+  - name: fastlane-plugin-firebase_app_distribution
+    version: "0.2.4"
 
 pip_executable: "pip3.7"
 pip_packages:
@@ -82,11 +92,15 @@ yd_osx_updates_for_install:
   - "macOS Catalina 10.15.6 Supplemental Update- "
   - "Safari14.0CatalinaAuto-14.0"
   - "macOS Catalina 10.15.7 Update- "
+  - "macOS Catalina 10.15.7 Supplemental Update- "
+  - "Command Line Tools for Xcode-12.1"
   # - "Command Line Tools beta 5 for Xcode-12.0"
+  - "Command Line Tools for Xcode-12.2"
+  - "Safari14.0.1CatalinaAuto-14.0.1"
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
-yd_required_xcode_version: "11.7"
+yd_required_xcode_version: "12.2"
 yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
 yd_swarm_client_version: "3.23"
@@ -103,6 +117,7 @@ pre_provision_tasks:
   - "{{ playbook_dir }}/tasks/ssh-keys.yml"
   - "{{ playbook_dir }}/tasks/osx-updates.yml"
   - "{{ playbook_dir }}/tasks/install_xcode.yml"
+  - "{{ playbook_dir }}/tasks/prepare_askpass.yml"
  
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: 
@@ -111,3 +126,4 @@ post_provision_tasks:
   - "{{ playbook_dir }}/tasks/identities.yml"
   - "{{ playbook_dir }}/tasks/git.yml"
   - "{{ playbook_dir }}/tasks/spaceauth.yml"
+  - "{{ playbook_dir }}/tasks/remove_askpass.yml"

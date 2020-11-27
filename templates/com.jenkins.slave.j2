@@ -6,10 +6,6 @@
         <string>com.jenkins.slave</string>
         <key>ProgramArguments</key>
         <array>
-                <string>sudo</string>
-                <string>-u</string>
-                <string>{{ yd_host_user_name }}</string>
-                <string>-i</string>
                 <string>/usr/bin/java</string>
                 <string>-jar</string>
                 <string>/Users/{{ yd_host_user_name }}/Jenkins/swarm-client-{{ yd_swarm_client_version }}.jar</string>
@@ -39,8 +35,6 @@
                 <string>-password</string>
                 <string>{{ yd_jenkins_agent_password }}</string>
         </array>
-        <key>RunAtLoad</key>
-        <true/>
         <key>KeepAlive</key>
         <true/>
         <key>StandardOutPath</key>

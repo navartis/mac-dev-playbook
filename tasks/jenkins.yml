@@ -3,6 +3,58 @@
     yd_node_identifier="{{ yd_host_name_prefix }}{{ ansible_ssh_host.split('.')[3] }}"
   tags: ["always"]
 
+- name: Ensure Password for Automatic Login is Actual
+  copy:
+    src: "./private/kcpassword"
+    dest: "/private/etc/kcpassword"
+    mode: 0600
+  become: yes
+  register: autologin_password_result
+  tags:
+    ["always"]
+
+- name: Check Defaults for Automatic Login is Actual File Existance
+  stat:
+    path: /Library/Preferences/com.apple.loginwindow.plist
+  become: yes
+  register: autologin_defaults_file
+  tags: ["always"]
+
+- name: Ensure Defaults for Automatic Login is Actual
+  copy:
+    src: "./private/com.apple.loginwindow.plist"
+    dest: "/Library/Preferences/com.apple.loginwindow.plist"
+    mode: 0644
+  become: yes
+  when: not autologin_defaults_file.stat.exists
+  register: autologin_defaults_result
+  tags:
+    ["always"]
+
+- name: Get Current Automatic Login Defaults User Name
+  command: defaults read /Library/Preferences/com.apple.loginwindow "autoLoginUser"
+  register: current_autologin_defaults_user_result
+  changed_when: false
+  failed_when: false
+  # failed_when: current_autologin_defaults_user_result.rc not in [0]
+  tags:
+    ["always"]
+
+- name: Ensure Automatic Login Defaults User Name
+  command: defaults write /Library/Preferences/com.apple.loginwindow "autoLoginUser" "{{ yd_host_user_name }}"
+  become: yes
+  register: autologin_defaults_username_change_result
+  when: current_autologin_defaults_user_result.stdout != yd_host_user_name
+  tags:
+    ["always"]
+
+- name: Reboot When Automatic Login Params Changed
+  command: shutdown -r now
+  become: yes
+  when: autologin_password_result.changed or autologin_defaults_username_change_result.changed
+  tags:
+    ["always"]
+
 - name: Ensure Jenkins Host Resolving
   lineinfile: 
     path: /etc/hosts
@@ -30,32 +82,21 @@
     # force: yes
   register: swarm_client_file
   tags: ["always"]
-  
-# - name: Check plist file exists
-#   stat:
-#     path: /Library/LaunchDaemons/com.jenkins.slave.plist
-#   register: plist_file
-#   tags: ["always"]
 
-- name: Copy plist
-  template:
-    src: com.jenkins.slave.j2
-    dest: /Library/LaunchDaemons/com.jenkins.slave.plist
-    force: true
-    owner: root
-    group: wheel
-    mode: 0644
+- name: Check System Launch Daemon File Existance
+  stat:
+    path: /Library/LaunchDaemons/com.jenkins.slave.plist
   become: yes
-  register: plist_file
+  register: system_launch_daemon_file
   tags: ["always"]
 
-- name: Unload launchd service
+- name: Unload System Launch Deamon Service
   command: launchctl unload /Library/LaunchDaemons/com.jenkins.slave.plist
   become: yes
-  when: plist_file.changed or swarm_client_file.changed
+  when: system_launch_daemon_file.stat.exists
   tags: ["always"]
 
-- name: Check service status
+- name: Check System Launch Deamon Service Not Loaded
   command: launchctl list com.jenkins.slave
   become: yes
   register: status_result
@@ -63,8 +104,43 @@
   failed_when: "status_result.rc not in [0, 113]"
   tags: ["always"]
 
-- name: Load launchd service
-  command: launchctl load /Library/LaunchDaemons/com.jenkins.slave.plist
+- name: Delete System Launch Daemon File
+  file:
+    path: /Library/LaunchDaemons/com.jenkins.slave.plist
+    state: "absent"
   become: yes
-  when: "'Could not find service' in status_result.stderr and status_result.rc == 113"
+  tags: ["always"]
+
+- name: Ensure User Launch Agents Directory Exists
+  file:
+    path: ~/Library/LaunchAgents/
+    state: directory
+  tags: ["always"]
+
+- name: Ensure Launch Agent Configuration Actual
+  template:
+    src: com.jenkins.slave.j2
+    dest: ~/Library/LaunchAgents/com.jenkins.slave.plist
+    force: true
+    mode: 0644
+  register: user_launch_agent_file
+  tags: ["always"]
+
+- name: Unload User Launch Agent Service
+  command: launchctl bootout gui/{{ user_launch_agent_file.uid }} ~/Library/LaunchAgents/com.jenkins.slave.plist
+  when: user_launch_agent_file.changed or swarm_client_file.changed
+  register: bootout_result
+  failed_when: "bootout_result.rc not in [36, 113]"
+  tags: ["always"]
+
+- name: Check User Launch Agent Status
+  command: launchctl print gui/{{ user_launch_agent_file.uid }}/com.jenkins.slave
+  register: user_launch_agent_status
+  changed_when: false
+  failed_when: "user_launch_agent_status.rc not in [0, 113]"
+  tags: ["always"]
+
+- name: Load User Launch Agent
+  command: launchctl bootstrap gui/{{ user_launch_agent_file.uid }} ~/Library/LaunchAgents/com.jenkins.slave.plist
+  when: "'Could not find service' in user_launch_agent_status.stderr and status_result.rc == 113"
   tags: ["always"]
