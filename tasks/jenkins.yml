@@ -122,8 +122,23 @@
     src: com.jenkins.slave.j2
     dest: ~/Library/LaunchAgents/com.jenkins.slave.plist
     force: true
-    mode: 0644
+    mode: 0640
   register: user_launch_agent_file
+  tags: ["always"]
+
+- name: Ensure Launch Daemon Logs Owner and Access
+  file:
+    path: /Users/{{ yd_host_user_name }}/Jenkins/{{ log_file_item }}
+    owner: "{{ yd_host_user_name }}"
+    group: "{{ user_launch_agent_file.group }}"
+    mode: 0640
+    state: touch
+  become: true
+  loop_control:
+    loop_var: log_file_item
+  loop:
+     - "stdout.log"
+     - "error.log"
   tags: ["always"]
 
 - name: Unload User Launch Agent Service
