@@ -3,6 +3,16 @@
     yd_node_identifier="{{ yd_host_name_prefix }}{{ ansible_ssh_host.split('.')[3] }}"
   tags: ["always"]
 
+- name: Get OS Version
+  command: sw_vers -productVersion
+  register: os_version_result
+  changed_when: no
+  tags: ["always"]
+
+- set_fact: 
+    yd_os_version="{{ os_version_result.stdout }}"
+  tags: ["always"]
+
 - name: Ensure Password for Automatic Login is Actual
   copy:
     src: "./private/kcpassword"
@@ -132,6 +142,8 @@
     owner: "{{ yd_host_user_name }}"
     group: "{{ user_launch_agent_file.group }}"
     mode: 0640
+    access_time: preserve
+    modification_time: preserve
     state: touch
   become: true
   loop_control:
