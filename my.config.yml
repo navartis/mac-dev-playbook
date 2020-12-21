@@ -97,6 +97,10 @@ yd_osx_updates_for_install:
   # - "Command Line Tools beta 5 for Xcode-12.0"
   - "Command Line Tools for Xcode-12.2"
   - "Safari14.0.1CatalinaAuto-14.0.1"
+  - "Safari14.0.2CatalinaAuto-14.0.2"
+  - "macOS Big Sur 11.1 Update-20C69"
+  - "Обновление macOS Big Sur 11.1-20C69"
+  - "Security Update 2020-001-10.15.7"
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
