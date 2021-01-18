@@ -103,7 +103,7 @@ yd_osx_updates_for_install:
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
-yd_required_xcode_version: "12.2"
+yd_required_xcode_version: "12.3"
 yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
 yd_swarm_client_version: "3.23"
