@@ -100,6 +100,9 @@ yd_osx_updates_for_install:
   - "macOS Big Sur 11.1 Update-20C69"
   - "Обновление macOS Big Sur 11.1-20C69"
   - "Security Update 2020-001-10.15.7"
+  - "macOS Big Sur-20D74"
+  - "macOS Catalina 10.15.7 Supplemental Update-10.15.7"
+  - "Safari14.0.3CatalinaAuto-14.0.3"
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
