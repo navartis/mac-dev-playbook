@@ -157,7 +157,7 @@
   command: launchctl bootout gui/{{ user_launch_agent_file.uid }} ~/Library/LaunchAgents/com.jenkins.slave.plist
   when: user_launch_agent_file.changed or swarm_client_file.changed
   register: bootout_result
-  failed_when: "bootout_result.rc not in [36, 113]"
+  failed_when: "bootout_result.rc not in [0, 36, 113]"
   tags: ["always"]
 
 - name: Check User Launch Agent Status
