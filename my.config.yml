@@ -25,6 +25,8 @@ homebrew_installed_packages:
   - "chargepoint/xcparse/xcparse" 
   - "coreutils"
   - "xmlstarlet"
+  - "libffi"
+  - "ruby-build"
 
 homebrew_uninstalled_packages: 
   - "openjdk"
@@ -41,6 +43,12 @@ mas_installed_apps: []
 
 osx_script: "~/configure_osx.sh --no-restart"
 
+# TODO
+# Automate gems installation issue in the tasks/install_xcode.yml
+# cd $(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0 && ln -s universal-darwin20 universal-darwin19
+#
+# https://github.com/CocoaPods/CocoaPods/issues/10286#issuecomment-750403566
+#
 gem_packages_become: yes
 gem_packages:
   - name: cocoapods

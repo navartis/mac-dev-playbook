@@ -1,8 +1,20 @@
 ---
-- name: Ensure Space Auth
+- set_fact: 
+    yd_space_cookie_dest_path=".fastlane/spaceship/{{ yd_adp_email }}/cookie"
+  tags: ["always"]
+
+- name: Ensure Space Auth Cookie Destination Dir Exists
+  file:
+    path: "{{ yd_space_cookie_dest_path | dirname }}"
+    state: directory
+    recurse: yes
+  tags:
+    ["always"]
+
+- name: Ensure Space Auth Cookie is Actual
   copy:
     src: "./private/spaceauth.cookie"
-    dest: ".fastlane/spaceship/{{ yd_adp_email }}/cookie"
+    dest: "{{ yd_space_cookie_dest_path }}"
     mode: 0600
   tags:
     ["always"]
