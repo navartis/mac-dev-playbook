@@ -27,14 +27,15 @@ homebrew_installed_packages:
   - "xmlstarlet"
   - "libffi"
   - "ruby-build"
-
-homebrew_uninstalled_packages: 
   - "openjdk"
+
+homebrew_uninstalled_packages:
+  - "adoptopenjdk8"
 
 homebrew_sudo_password: ""
 homebrew_cask_appdir: /Applications
-homebrew_cask_apps:
-  - adoptopenjdk/openjdk/adoptopenjdk8
+homebrew_cask_apps: []
+  # - adoptopenjdk/openjdk/adoptopenjdk8
 
 mas_upgrade_all_apps: no
 mas_email: ""
@@ -118,6 +119,8 @@ yd_osx_updates_for_install:
   - "macOS Big Sur-20D74"
   - "macOS Catalina 10.15.7 Supplemental Update-10.15.7"
   - "Safari14.0.3CatalinaAuto-14.0.3"
+  - "macOS Big Sur 11.2.2-20D80"
+  - "macOS Big Sur 11.2.2-20D80"
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
