@@ -8,6 +8,8 @@ yd_host_name_prefix: ""
 yd_jenkins_agent_user: ""
 yd_jenkins_agent_password: ""
 
+yd_shell: "/bin/bash"
+
 dotfiles_repo: ""
 dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/Development/GitHub/dotfiles

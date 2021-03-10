@@ -20,3 +20,14 @@
     src: ~/.bash_profile
     dest: ~/.bashrc
     state: link
+
+- name: Get current SHELL
+  command: echo $SHELL
+  register: current_shell
+  changed_when: false
+
+- name: Ensure required SHELL
+  command: chsh -s {{ yd_shell }} {{ yd_host_user_name }}
+  become: true
+  when: current_shell.stdout != yd_shell
+
