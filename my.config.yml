@@ -1,7 +1,7 @@
-configure_dotfiles: yes  
-configure_sudoers: yes
-configure_terminal: no
-configure_osx: yes
+configure_dotfiles: true  
+configure_sudoers: true
+configure_terminal: false
+configure_osx: true
 
 yd_host_user_name: ""
 yd_host_name_prefix: ""
@@ -9,7 +9,7 @@ yd_jenkins_agent_user: ""
 yd_jenkins_agent_password: ""
 
 dotfiles_repo: ""
-dotfiles_repo_accept_hostkey: yes
+dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/Development/GitHub/dotfiles
 dotfiles_files:
   - .profile
@@ -18,7 +18,7 @@ dotfiles_files:
   - Development.p12
   - Distribution.p12
 
-homebrew_upgrade_all_packages: yes
+homebrew_upgrade_all_packages: true
 homebrew_installed_packages:
   - "python@3.7"
   - "jq"
@@ -37,7 +37,7 @@ homebrew_cask_appdir: /Applications
 homebrew_cask_apps: []
   # - adoptopenjdk/openjdk/adoptopenjdk8
 
-mas_upgrade_all_apps: no
+mas_upgrade_all_apps: fasle
 mas_email: ""
 mas_password: ""
 mas_installed_apps: []
@@ -50,7 +50,7 @@ osx_script: "~/configure_osx.sh --no-restart"
 #
 # https://github.com/CocoaPods/CocoaPods/issues/10286#issuecomment-750403566
 #
-gem_packages_become: yes
+gem_packages_become: true
 gem_packages:
   - name: cocoapods
     version: "1.10.1"
