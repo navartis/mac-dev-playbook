@@ -121,6 +121,9 @@ yd_osx_updates_for_install:
   - "Safari14.0.3CatalinaAuto-14.0.3"
   - "macOS Big Sur 11.2.2-20D80"
   - "macOS Big Sur 11.2.2-20D80"
+  - "macOS Big Sur 11.2.3-20D91"
+  - "macOS Big Sur 11.2.3-20D91"
+  - "Safari14.0.3CatalinaAuto-14.0.3"
 
 yd_share_network_resource: ""
 yd_share_mount_point: ""
