@@ -118,13 +118,10 @@ yd_osx_updates_for_install:
   - "Обновление macOS Big Sur 11.1-20C69"
   - "Security Update 2020-001-10.15.7"
   - "macOS Big Sur-20D74"
-  - "macOS Big Sur-20D74"
   - "macOS Catalina 10.15.7 Supplemental Update-10.15.7"
   - "Safari14.0.3CatalinaAuto-14.0.3"
   - "macOS Big Sur 11.2.2-20D80"
-  - "macOS Big Sur 11.2.2-20D80"
   - "macOS Big Sur 11.2.3-20D91"
-  - "macOS Big Sur 11.2.3-20D91"
   - "Safari14.0.3CatalinaAuto-14.0.3"
 
 yd_share_network_resource: ""
@@ -144,7 +141,7 @@ yd_adp_email: ""
 
 pre_provision_tasks: 
   - "{{ playbook_dir }}/tasks/ssh-keys.yml"
-  - "{{ playbook_dir }}/tasks/osx-updates.yml"
+  - "{{ playbook_dir }}/tasks/new-osx-updates.yml"
   - "{{ playbook_dir }}/tasks/install_xcode.yml"
   - "{{ playbook_dir }}/tasks/prepare_askpass.yml"
  
@@ -156,3 +153,4 @@ post_provision_tasks:
   - "{{ playbook_dir }}/tasks/git.yml"
   - "{{ playbook_dir }}/tasks/spaceauth.yml"
   - "{{ playbook_dir }}/tasks/remove_askpass.yml"
+  

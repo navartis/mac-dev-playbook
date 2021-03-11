@@ -1,0 +1,33 @@
+---
+- name: Request Available Updates
+  shell: 'softwareupdate -l | grep "* Label:"'
+  register: available_updates_result
+  changed_when: false
+  failed_when: "available_updates_result.rc not in [0, 1]"
+  # loop_control:
+  #   loop_var: update_item
+  # with_items: "{{ yd_osx_updates_for_install }}"
+  tags: ["always"]
+
+- name: Install MacOS Updates
+  command: softwareupdate -i "{{ update_item.split(':')[1][1:] }}" --restart --force
+  become: yes
+  register: update_result
+  changed_when: "'No such update' not in update_result.stderr "
+  failed_when: "update_result.rc != 0"
+  when: "update_item.split(':')[1][1:] in yd_osx_updates_for_install "
+  loop_control:
+    loop_var: update_item
+  with_items: "{{ available_updates_result.stdout_lines }}"
+  tags: ["always"]
+
+# - name: List Available
+#   command: echo "{{ update_item.split(':')[1][1:] | regex_replace("[\s]", "_") }}"
+#   # register: available_updates_result
+#   # changed_when: false
+#   # failed_when: "available_updates_result.rc != 0"
+#   when: "'20D91' in update_item.split(':')[1][1:]  "
+#   loop_control:
+#     loop_var: update_item
+#   with_items: "{{ available_updates_result.stdout_lines }}"
+#   tags: ["always"]
