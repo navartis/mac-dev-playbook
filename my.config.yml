@@ -76,6 +76,9 @@ gem_packages:
     state: "absent"
   - name: fastlane
     version: "2.175.0"
+    state: "absent"
+  - name: fastlane
+    version: "2.182.0"
   - name: fastlane-plugin-firebase_app_distribution
     version: "0.2.0"
     state: "absent"
@@ -84,6 +87,9 @@ gem_packages:
     state: "absent"
   - name: fastlane-plugin-firebase_app_distribution
     version: "0.2.5"
+    state: "absent"
+  - name: fastlane-plugin-firebase_app_distribution
+    version: "0.2.7"
 
 pip_executable: "pip3.7"
 pip_packages:
@@ -91,7 +97,7 @@ pip_packages:
     version: "0.1.69"
     executable: "{{ pip_executable }}"
   - name: python-gitlab
-    version: "2.6.0"
+    version: "2.7.1"
     executable: "{{ pip_executable }}"
   - name: python-jenkins
     version: "1.7.0"
@@ -100,7 +106,7 @@ pip_packages:
     version: "2.9.3"
     executable: "{{ pip_executable }}"
   - name: configparser 
-    version: "5.0.0"
+    version: "5.0.2"
     executable: "{{ pip_executable }}"
 
 yd_osx_updates_for_install:
@@ -129,7 +135,7 @@ yd_share_mount_point: ""
 yd_required_xcode_version: "12.4"
 yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
-yd_swarm_client_version: "3.25"
+yd_swarm_client_version: "3.23"
 
 yd_required_identities: []
 
