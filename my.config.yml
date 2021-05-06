@@ -129,7 +129,7 @@ yd_share_mount_point: ""
 yd_required_xcode_version: "12.4"
 yd_xcode_file_name: "Xcode_{{yd_required_xcode_version}}.xip"
 
-yd_swarm_client_version: "3.23"
+yd_swarm_client_version: "3.25"
 
 yd_required_identities: []
 
