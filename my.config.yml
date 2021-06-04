@@ -30,6 +30,7 @@ homebrew_installed_packages:
   - "libffi"
   - "ruby-build"
   - "openjdk"
+  - "xcodegen"
 
 homebrew_uninstalled_packages:
   - "adoptopenjdk8"
@@ -90,6 +91,9 @@ gem_packages:
     state: "absent"
   - name: fastlane-plugin-firebase_app_distribution
     version: "0.2.7"
+    state: "absent"
+  - name: fastlane-plugin-firebase_app_distribution
+    version: "0.2.9"
 
 pip_executable: "pip3.7"
 pip_packages:
