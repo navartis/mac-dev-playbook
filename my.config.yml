@@ -29,16 +29,18 @@ homebrew_installed_packages:
   - "xmlstarlet"
   - "libffi"
   - "ruby-build"
-  - "openjdk"
   - "xcodegen"
+  # - "java6"
+  # - "homebrew/cask-versions/java6"
 
 homebrew_uninstalled_packages:
   - "adoptopenjdk8"
+  - "openjdk"
 
 homebrew_sudo_password: ""
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps: []
-  # - adoptopenjdk/openjdk/adoptopenjdk8
+  # - adoptopenjdk/openjdk/adoptopenjdk8 ??
 
 mas_upgrade_all_apps: fasle
 mas_email: ""
