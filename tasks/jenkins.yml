@@ -65,6 +65,14 @@
   tags:
     ["always"]
 
+- name: Ensure Old Jenkins Host Not Resolving
+  lineinfile: 
+    path: /etc/hosts
+    regexp: ".*{{ yd_jenkins_hostname }}"
+    state: absent
+  become: yes
+  tags: ["always"]
+
 - name: Ensure Jenkins Host Resolving
   lineinfile: 
     path: /etc/hosts
