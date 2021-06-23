@@ -114,6 +114,12 @@ pip_packages:
   - name: configparser 
     version: "5.0.2"
     executable: "{{ pip_executable }}"
+  - name: pyyaml
+    version: "5.4.1"
+    executable: "{{ pip_executable }}"
+  - name: Jinja2
+    version: "3.0.0"
+    executable: "{{ pip_executable }}"
 
 yd_osx_updates_for_install:
   - "macOS Catalina 10.15.6 Update- "
